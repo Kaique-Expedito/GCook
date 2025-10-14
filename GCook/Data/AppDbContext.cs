@@ -1,4 +1,5 @@
 using GCook.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -23,5 +24,15 @@ public class AppDbContext : IdentityDbContext<Usuario>
 
         builder.Entity<ReceitaIngrediente>()
         .HasKey(ri => new {ri.ReceitaId,ri.IngredientesId});
+
+        #region Definição de nomes do Identity
+        builder.Entity<Usuario>().ToTable("usuario");
+        builder.Entity<IdentityRole>().ToTable("Perfil");
+        builder.Entity<IdentityUserRole<string>>().ToTable("usuario_perfil");
+        builder.Entity<IdentityUserClaim<string>>().ToTable("usuario_regra");
+        builder.Entity<IdentityUserToken<string>>().ToTable("usuario_token");
+        builder.Entity<IdentityUserLogin<string>>().ToTable("usuario_login");
+        builder.Entity<IdentityRoleClaim<string>>().ToTable("perfil_regra");
+        #endregion
     }
 }
