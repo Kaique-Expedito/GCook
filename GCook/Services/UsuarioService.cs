@@ -1,0 +1,49 @@
+using GCook.Data;
+using GCook.Helpers;
+using GCook.Models;
+using GCook.ViewModels;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.BlazorIdentity.Pages;
+
+namespace GCook.Services;
+
+public class UsuarioService : IUsuarioService
+{
+    private readonly AppDbContext _context;
+    private readonly SignInManager<Usuario> _signInManager;
+    private readonly UserManager<Usuario> _userManager;
+    private readonly ILogger<UsuarioService> _logger;
+
+    public UsuarioService(
+    AppDbContext context,
+    SignInManager<Usuario> singInManager,
+    UserManager<Usuario> userManager,
+    ILogger<UsuarioService> logger
+)
+    {
+        _context = context;
+        _signInManager = singInManager;
+        _userManager = userManager;
+        _logger = logger;
+    }
+
+    public async Task<SignInResult> LoginUsuario(LoginVM login)
+    {
+        string userName = login.Email;
+        if (Helper.IsValidEmail(login.Email))
+        {
+            var user = await _userManager.FindByEmailAsync(login.Email);
+            if (user != null)
+                userName = user.UserName;
+        }
+
+        var result = await _signInManager.PasswordSignInAsync(
+            userName, login.Senha, login.Lembrar, lockoutOnFailure: true
+        );
+    }
+
+    public Task LogoutUsuario()
+    {
+        throw new NotImplementedException();
+    }
+}

@@ -10,9 +10,9 @@ public class ReceitaIngrediente
     [ForeignKey("ReceitaId")]
     public Receita Receita { get; set; }
     [Key, Column(Order = 2)]
-    public int IngredientesId { get; set; }
-    [ForeignKey("IngredientesId")]
-    public Ingredientes Ingredientes { get; set; }
+    public int IngredienteId { get; set; }
+    [ForeignKey("IngredienteId")]
+    public Ingrediente Ingrediente { get; set; }
     [StringLength(30)]
     [Required(ErrorMessage = "A Quantidade é obrigatória")]
     public string Quantidade { get; set; }

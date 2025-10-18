@@ -41,7 +41,7 @@ public class HomeController : Controller
             .Where(r => r.Id == id)
             .Include(r => r.Categoria)
             .Include(r => r.Ingredientes)
-            .ThenInclude(i => i.Ingredientes)
+            .ThenInclude(i => i.Ingrediente)
             .AsNoTracking()
             .FirstOrDefault();
         return View(receita);
